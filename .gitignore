@@ -1,0 +1,9 @@
+.env
+Pipfile.lock
+services/docs/build
+.idea
+*.pyc
+.pytest_cache
+.coverage
+*db.sqlite
+*messages.log
