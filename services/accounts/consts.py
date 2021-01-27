@@ -1,6 +1,3 @@
-from enum import Enum
-
-
 class SignExpiries:
     """Expirations members of module"""
     REGISTRATION_EMAIL = 60 * 60 * 24

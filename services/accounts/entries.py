@@ -5,7 +5,6 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from pydantic import PrivateAttr
 from pydantic.main import BaseModel
 from pytz import UTC
 
