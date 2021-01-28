@@ -1,5 +1,5 @@
-from contrib.blp.returns import Success, Failure, Result
-from contrib.blp.stories import story
+from blp.returns import Success, Failure, Result
+from blp.stories import story
 from .consts import SignExpiries, ErrorCodes, MessageTypes
 from .interfaces import UserBaseDBIterface
 

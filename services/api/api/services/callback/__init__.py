@@ -7,6 +7,7 @@ from api.create_tables import MODELS
 router = APIRouter(tags=['callback'])
 
 
+#ToDo: Make auth for rpc server
 @router.post('/', dependencies=[Depends(get_db)])
 def callback(data: Callback):
     """

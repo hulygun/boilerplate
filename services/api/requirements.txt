@@ -1,0 +1,6 @@
+fastapi==0.63.0
+passlib==1.7.4
+peewee==3.14.0
+pytz==2020.5
+redis==3.5.3
+uvicorn==0.13.3

@@ -5,24 +5,25 @@ services:
     container_name: api
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.api
     volumes:
-      - ./services:/code
+      - ./services/api:/code
+      - ./services/contrib:/contrib
     command: uvicorn api.run:app --reload --host 0.0.0.0
     ports:
       - "8000:8000"
     depends_on:
       - redis
-#  rpc:
-#    container_name: rpc
-#    build:
-#      context: .
-#      dockerfile: Dockerfile.dev
-#    volumes:
-#      - ./services/rpc:/code
-#    command: python run.py
-#    ports:
-#      - "8080:8080"
+  rpc:
+    container_name: rpc
+    build:
+      context: .
+      dockerfile: Dockerfile.rpc
+    volumes:
+      - ./services/rpc:/code
+    command: gunicorn run:web_app --bind 0.0.0.0:8080 --reload --worker-class aiohttp.GunicornWebWorker
+    depends_on:
+      - redis
   redis:
     container_name: redis
     image: "redis:alpine"

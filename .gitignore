@@ -7,3 +7,4 @@ services/docs/build
 .coverage
 *db.sqlite
 *messages.log
+data
