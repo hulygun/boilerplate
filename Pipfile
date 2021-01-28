@@ -16,6 +16,8 @@ uvicorn = "*"
 peewee = "*"
 passlib = "*"
 redis = "*"
+aiohttp-rpc = "*"
+rq = "*"
 
 [requires]
 python_version = "3.8"

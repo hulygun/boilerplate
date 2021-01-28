@@ -13,6 +13,16 @@ services:
       - "8000:8000"
     depends_on:
       - redis
+#  rpc:
+#    container_name: rpc
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.dev
+#    volumes:
+#      - ./services/rpc:/code
+#    command: python run.py
+#    ports:
+#      - "8080:8080"
   redis:
     container_name: redis
     image: "redis:alpine"
