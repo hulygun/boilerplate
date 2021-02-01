@@ -1,0 +1,24 @@
+msgid "Invalid password"
+msgstr ""
+
+msgid "Invalid sign"
+msgstr ""
+
+msgid "Invalid token"
+msgstr ""
+
+msgid "Passwords do not match"
+msgstr ""
+
+msgid "User exist"
+msgstr ""
+
+msgid "User not confirmed"
+msgstr ""
+
+msgid "User not found"
+msgstr ""
+
+msgid "Wrong password"
+msgstr ""
+

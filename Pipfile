@@ -19,6 +19,8 @@ passlib = "*"
 redis = "*"
 aiohttp-rpc = "*"
 rq = "*"
+pybabel = "*"
+babel = "*"
 
 [requires]
 python_version = "3.8"

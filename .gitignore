@@ -3,6 +3,7 @@ Pipfile.lock
 services/docs/build
 .idea
 *.pyc
+*.mo
 .pytest_cache
 .coverage
 *db.sqlite
