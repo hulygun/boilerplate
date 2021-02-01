@@ -116,95 +116,95 @@ class UserStory:
     ####################
     # Steps of stories #
     ####################
-    def activate_user(self, ctx):
-        self.interface.activate_user(ctx.user)
+    async def activate_user(self, ctx):
+        await self.interface.activate_user(ctx.user)
         return Success()
 
-    def check_confirm_user(self, ctx):
+    async def check_confirm_user(self, ctx):
         if not ctx.user.is_active:
             return Failure(ErrorCodes.USER_NOT_CONFIRMED)
         return Success()
 
-    def check_exists_users(self, ctx):
-        if self.interface.check_exist(email=ctx.email):
+    async def check_exists_users(self, ctx):
+        if await self.interface.check_exist(email=ctx.email):
             return Failure(ErrorCodes.USER_EXIST, False)
         return Success()
 
-    def check_sign(self, ctx):
-        user_uuid = self.interface.uuid_by_sign(ctx.sign)
+    async def check_sign(self, ctx):
+        user_uuid = await self.interface.uuid_by_sign(ctx.sign)
         if not user_uuid:
             return Failure(ErrorCodes.INVALID_SIGN, False)
         ctx.user_uuid = user_uuid
         return Success()
 
-    def check_valid_password(self, ctx):
-        if not self.interface.verificate_password(ctx.user, ctx.password):
+    async def check_valid_password(self, ctx):
+        if not await self.interface.verificate_password(ctx.user, ctx.password):
             return Failure(ErrorCodes.WRONG_PASSWORD, False)
         return Success()
 
-    def clear_tokens(self, ctx):
-        self.interface.clear_tokens(ctx.user.id, ctx.fingerprint)
+    async def clear_tokens(self, ctx):
+        await self.interface.clear_tokens(ctx.user.id, ctx.fingerprint)
         return Success()
 
-    def compare_passwords(self, ctx):
+    async def compare_passwords(self, ctx):
         if ctx.password != ctx.confirm_password:
             return Failure(ErrorCodes.PASSWORDS_DO_NOT_MATCH, False)
         return Success()
 
-    def create_user(self, ctx):
-        ctx.user = self.interface.create_user(email=ctx.email)
+    async def create_user(self, ctx):
+        ctx.user = await self.interface.create_user(email=ctx.email)
         return Success()
 
-    def generate_sign(self, ctx):
-        ctx.sign = self.interface.generate_sign(ctx.user, expiries=SignExpiries.REGISTRATION_EMAIL)
+    async def generate_sign(self, ctx):
+        ctx.sign = await self.interface.generate_sign(ctx.user, expiries=SignExpiries.REGISTRATION_EMAIL)
         return Success()
 
-    def get_user_by_email(self, ctx):
-        user = self.interface.get_user_by_field(email=ctx.email)
+    async def get_user_by_email(self, ctx):
+        user = await self.interface.get_user_by_field(email=ctx.email)
         if not user:
             return Failure(ErrorCodes.USER_NOT_FOUND, False)
         ctx.user = user
         return Success()
 
-    def get_user_by_token(self, ctx):
-        user = self.interface.get_user_by_field(refresh_token=ctx.refresh_token, fingerprint=ctx.fingerprint)
+    async def get_user_by_token(self, ctx):
+        user = await self.interface.get_user_by_field(refresh_token=ctx.refresh_token, fingerprint=ctx.fingerprint)
         if not user:
             return Failure(ErrorCodes.INVALID_TOKEN, False)
         ctx.user = user
         return Success()
 
-    def get_user_by_uuid(self, ctx):
-        user = self.interface.get_user_by_field(id=ctx.user_uuid)
+    async def get_user_by_uuid(self, ctx):
+        user = await self.interface.get_user_by_field(id=ctx.user_uuid)
         if not user:
             return Failure(ErrorCodes.USER_NOT_FOUND)
         ctx.user = user
         return Success()
 
-    def get_user_tokens(self, ctx):
-        ctx.tokens = self.interface.get_tokens(ctx.user, ctx.fingerprint)
+    async def get_user_tokens(self, ctx):
+        ctx.tokens = await self.interface.get_tokens(ctx.user, ctx.fingerprint)
         return Success()
 
-    def return_tokens(self, ctx):
+    async def return_tokens(self, ctx):
         return Result(ctx.tokens)
 
-    def return_user(self, ctx):
-        return Result(ctx.user.dict(exclude='password'))
+    async def return_user(self, ctx):
+        return Result(ctx.user.dict(exclude={'password'}))
 
-    def send_confirm_message(self, ctx):
-        self.interface.send_message(message_type=MessageTypes.CONFIRM, recipient=ctx.user, extra={'sign': ctx.sign})
+    async def send_confirm_message(self, ctx):
+        await self.interface.send_message(message_type=MessageTypes.CONFIRM, recipient=ctx.user, extra={'sign': ctx.sign})
         return Success()
 
-    def send_recovery_message(self, ctx):
-        self.interface.send_message(message_type=MessageTypes.RECOVERY, recipient=ctx.user, extra={'sign': ctx.sign})
+    async def send_recovery_message(self, ctx):
+        await self.interface.send_message(message_type=MessageTypes.RESTORE, recipient=ctx.user, extra={'sign': ctx.sign})
         return Success()
 
-    def send_welcome_message(self, ctx):
-        self.interface.send_message(message_type=MessageTypes.WELCOME, recipient=ctx.user)
+    async def send_welcome_message(self, ctx):
+        await self.interface.send_message(message_type=MessageTypes.WELCOME, recipient=ctx.user)
         return Success()
 
-    def set_password(self, ctx):
-        self.interface.set_user_password(ctx.user, ctx.password)
+    async def set_password(self, ctx):
+        await self.interface.set_user_password(ctx.user, ctx.password)
         return Success()
 
-    def validate_password(self, ctx):
+    async def validate_password(self, ctx):
         return Success()

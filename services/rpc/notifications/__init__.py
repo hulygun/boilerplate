@@ -1,9 +1,10 @@
-from .const import INTERFACE_MAPPING, Interface
-from .entries import Message
+import inspect
+from . import interfaces
+from notifications.interfaces import BaseMessageInterface
 
 
-def send_message(interface_repr: str, message_data: dict, **attachments) -> bool:
-    """send message"""
-    interface = INTERFACE_MAPPING.get(interface_repr, Interface.VOID)
-    message = Message(**message_data)
-    return interface.send_message(message, **attachments)
+def get_interface(class_name: str):
+    modules = inspect.getmembers(interfaces, inspect.isclass)
+    interface = next(filter(lambda obj: obj[0] == class_name, modules), (None, None))
+    return interface[1]
+

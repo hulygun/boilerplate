@@ -15,6 +15,7 @@ services:
     depends_on:
       - redis
   rpc:
+    env_file: .env
     container_name: rpc
     build:
       context: .

@@ -1,3 +1,6 @@
+import os
+
+
 class SignExpiries:
     """Expirations members of module"""
     REGISTRATION_EMAIL = 60 * 60 * 24
@@ -17,6 +20,6 @@ class ErrorCodes:
 
 class MessageTypes:
     """Type of available user messages"""
-    WELCOME = 1
-    CONFIRM = 2
-    RECOVERY = 3
+    CONFIRM = int(os.getenv('MESSAGE_CONFIRM'))
+    WELCOME = int(os.getenv('MESSAGE_WELCOME'))
+    RESTORE = int(os.getenv('MESSAGE_RESTORE'))

@@ -1,3 +1,4 @@
+aiohttp-rpc==0.7.0
 fastapi==0.63.0
 passlib==1.7.4
 peewee==3.14.0

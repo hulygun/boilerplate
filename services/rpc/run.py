@@ -1,18 +1,10 @@
 import aiohttp_rpc
 from aiohttp import web
 
-def echo(*args, **kwargs):
-    return {
-        'args': args,
-        'kwargs': kwargs,
-    }
-
-async def ping(rpc_request):
-    return 'pong'
+from rpc_methods import send_message
 
 aiohttp_rpc.rpc_server.add_methods([
-    ping,
-    echo,
+    send_message
 ])
 
 async def web_app():
