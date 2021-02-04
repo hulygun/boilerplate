@@ -9,6 +9,7 @@ services:
     volumes:
       - ./services/api:/code
       - ./services/contrib:/contrib
+      - ./locale:/locale
     command: uvicorn api.run:app --reload --host 0.0.0.0
     ports:
       - "8000:8000"

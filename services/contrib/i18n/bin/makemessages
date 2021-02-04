@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+#ToDo write usage message
+gen_po() {
+    if [ -f "${locale_dir}/${1}/LC_MESSAGES/${LOCALE_DOMAIN}.po" ]; then
+        pybabel update -D "${LOCALE_DOMAIN}" -i "${locale_dir}/${LOCALE_DOMAIN}.pot" -d "${locale_dir}" -l "${1}" --ignore-obsolete --previous
+    else
+        pybabel init -D "${LOCALE_DOMAIN}" -i "${locale_dir}/${LOCALE_DOMAIN}.pot" -d "${locale_dir}" -l "${1}"
+    fi
+}
+
+dirs=""
+while [[ $# -gt 0 ]]
+do
+    key="${1}"
+
+    case ${key} in
+        -l|--lang)
+            lang="${2}"
+            shift
+            shift
+            ;;
+        -o|--output)
+            locale_dir="${2}"
+            shift
+            shift
+            ;;
+        *)
+            dirs+="${1} "
+            shift
+            ;;
+    esac
+done
+
+pybabel extract -o "${locale_dir}/${LOCALE_DOMAIN}.pot" --no-location --omit-header --sort-output ${dirs}
+if [ -z ${lang+x} ]; then
+    for FILE in `ls "$locale_dir"`
+    do
+        if [[ $FILE != *.pot ]];
+        then
+          gen_po ${FILE}
+        fi
+    done
+else
+    gen_po ${lang}
+fi
+

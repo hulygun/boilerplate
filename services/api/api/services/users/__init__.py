@@ -4,7 +4,7 @@ from .const import USER_ERRORS
 from .data import UserCreateData, UserAuthData, Token, Email, Passwords
 from .interfaces import UserInterface
 from accounts.stories import UserStory
-from api.depends import get_db
+from api.depends import get_db, locale
 from api.db import db
 from api.helpers import get_fingerprint
 from .utils import current_user
@@ -40,8 +40,8 @@ async def confirm(secret: str):
         return result.value
 
 
-@router.post('/auth', dependencies=[Depends(get_db)])
-async def auth(request: Request, login: UserAuthData = Depends()):
+@router.post('/auth', dependencies=[Depends(get_db), Depends(locale)])
+async def auth(request: Request, login: UserAuthData):
     """
     Docstring with markup support
     **item** item
@@ -49,7 +49,8 @@ async def auth(request: Request, login: UserAuthData = Depends()):
     story = UserStory(UserInterface())
     result = await story.get_credentials(fingerprint=get_fingerprint(request),**login.dict())
     if result.is_failed:
-        raise HTTPException(status_code=400, detail=USER_ERRORS[result.value[0]])
+        print(USER_ERRORS[result.value[0]])
+        raise HTTPException(status_code=400, detail=str(USER_ERRORS[result.value[0]]))
     return result.value
 
 

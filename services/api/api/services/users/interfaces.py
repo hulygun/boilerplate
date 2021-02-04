@@ -74,18 +74,22 @@ class UserInterface(UserBaseDBIterface):
 
     async def get_user_by_field(self, **kwargs) -> Optional[User]:
         """Get user by field value or none"""
-        if 'id' in kwargs:
-            db_user = self.user.get(self.user.id == kwargs['id'])
-        elif 'email' in kwargs:
-            db_user = self.user.get(self.user.email == kwargs['email'])
-        else:
-            token = kwargs.get('refresh_token', None) or kwargs.get('access_token', None)
-            token_obj = RedisUserToken.get_tokens(token=token)
-            db_user = None
-            if token_obj:
-                token_obj = token_obj[0]
-                db_user = self.user.get(self.user.id == token_obj.user_id)
-        return User(**model_to_dict(db_user))
+        try:
+            if 'id' in kwargs:
+                db_user = self.user.get(self.user.id == kwargs['id'])
+            elif 'email' in kwargs:
+                db_user = self.user.get(self.user.email == kwargs['email'])
+            else:
+                token = kwargs.get('refresh_token', None) or kwargs.get('access_token', None)
+                token_obj = RedisUserToken.get_tokens(token=token)
+                db_user = None
+                if token_obj:
+                    token_obj = token_obj[0]
+                    db_user = self.user.get(self.user.id == token_obj.user_id)
+
+            return User(**model_to_dict(db_user))
+        except:
+            return None
 
     async def send_message(self, message_type: int, recipient: User, extra: Dict = None) -> None:
         """Send message"""

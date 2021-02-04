@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#ToDo write usage message
+for FILE in `ls "$1"`
+    do
+        if [[ $FILE != *.pot ]];
+        then
+          pybabel compile -D "${LOCALE_DOMAIN}" -d "${1}" -l "${FILE}" -i "" ${1}/${FILE}/LC_MESSAGES/${LOCALE_DOMAIN}.po --statistics
+        fi
+    done

@@ -176,7 +176,7 @@ class UserStory:
     async def get_user_by_uuid(self, ctx):
         user = await self.interface.get_user_by_field(id=ctx.user_uuid)
         if not user:
-            return Failure(ErrorCodes.USER_NOT_FOUND)
+            return Failure(ErrorCodes.USER_NOT_FOUND, False)
         ctx.user = user
         return Success()
 
