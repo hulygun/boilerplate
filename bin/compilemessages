@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+usage()
+{
+    echo "Usage: compilemessages [options] <LOCALES_DIR>"
+    echo ""
+    echo "compile message catalogs to MO files"
+    echo ""
+    echo "Options:"
+    echo -e "\t-h, --help \t show this help message and exit"
+    echo ""
+    echo -e "LOCALES_DIR: \t Optional overwrite locales directory. Default - $LOCALE_DIR"
+}
+
+while [ "$1" != "" ]; do
+    case "$1" in
+     -h|--help)
+        usage
+        exit 1
+        ;;
+     *)
+        locale_dir="${1}"
+        shift
+        ;;
+     esac
+done
+locale_dir="${locale_dir:-$LOCALE_DIR}"
+
+for FILE in `ls "${locale_dir}"`;
+do
+    if [[ ${FILE} != *.pot ]];
+    then
+      pybabel compile -D "${LOCALE_DOMAIN}" -d "${locale_dir}" -l "${FILE}" -i "${locale_dir}/${FILE}/LC_MESSAGES/${LOCALE_DOMAIN}.po" --statistics
+    fi
+done

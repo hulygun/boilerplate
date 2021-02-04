@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 
-#ToDo write usage message
+usage()
+{
+    echo "Usage: makemessages [options] <SOURCE_DIRS> ..."
+    echo ""
+    echo "make message catalogs"
+    echo ""
+    echo "Options:"
+    echo -e "\t-h, --help \t Show this help message and exit"
+    echo -e "\t-l --lang \t Set locale for messages catalog. If not set do update exists catalogs"
+    echo -e "\t-o --output \t Optional overwrite locales directory. Default - $LOCALE_DIR"
+    echo ""
+    echo -e "SOURCE_DIRS: \t Directories for found translatable messages"
+}
+
 gen_po() {
     if [ -f "${locale_dir}/${1}/LC_MESSAGES/${LOCALE_DOMAIN}.po" ]; then
         pybabel update -D "${LOCALE_DOMAIN}" -i "${locale_dir}/${LOCALE_DOMAIN}.pot" -d "${locale_dir}" -l "${1}" --ignore-obsolete --previous
@@ -15,6 +28,10 @@ do
     key="${1}"
 
     case ${key} in
+        -h|--help)
+            usage
+            exit 1
+            ;;
         -l|--lang)
             lang="${2}"
             shift
@@ -31,7 +48,7 @@ do
             ;;
     esac
 done
-
+locale_dir="${locale_dir:-$LOCALE_DIR}"
 pybabel extract -o "${locale_dir}/${LOCALE_DOMAIN}.pot" --no-location --omit-header --sort-output ${dirs}
 if [ -z ${lang+x} ]; then
     for FILE in `ls "$locale_dir"`
