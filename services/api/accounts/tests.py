@@ -2,8 +2,6 @@ from datetime import datetime
 from typing import Optional, Dict
 from uuid import uuid4, UUID
 
-import aiounittest
-
 from .consts import ErrorCodes
 from .entries import User, UserTokens
 from .interfaces import UserBaseDBIterface

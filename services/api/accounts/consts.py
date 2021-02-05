@@ -3,11 +3,11 @@ import os
 
 class SignExpiries:
     """Expirations members of module"""
-    REGISTRATION_EMAIL = 60 * 60 * 24
+    REGISTRATION_EMAIL = 60 * 60 * 24  # 1 day
 
 
 class ErrorCodes:
-    """Users error returns codes"""
+    """User errors return codes"""
     INVALID_PASSWORD = 1
     INVALID_SIGN = 2
     INVALID_TOKEN = 3

@@ -17,6 +17,6 @@ class TokenType:
     ACCESS = 'access'
 
 TOKEN_TYPE_EXPIRE = {
-    TokenType.REFRESH: 60 * 60 * 24 * 7,
-    TokenType.ACCESS: 60 * 60
+    TokenType.REFRESH: 60 * 60 * 24 * 7,  # 7 days
+    TokenType.ACCESS: 60 * 60  # 1 hour
 }

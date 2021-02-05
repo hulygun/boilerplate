@@ -191,11 +191,19 @@ class UserStory:
         return Result(ctx.user.dict(exclude={'password'}))
 
     async def send_confirm_message(self, ctx):
-        await self.interface.send_message(message_type=MessageTypes.CONFIRM, recipient=ctx.user, extra={'sign': ctx.sign})
+        await self.interface.send_message(
+            message_type=MessageTypes.CONFIRM,
+            recipient=ctx.user,
+            extra={'sign': ctx.sign}
+        )
         return Success()
 
     async def send_recovery_message(self, ctx):
-        await self.interface.send_message(message_type=MessageTypes.RESTORE, recipient=ctx.user, extra={'sign': ctx.sign})
+        await self.interface.send_message(
+            message_type=MessageTypes.RESTORE,
+            recipient=ctx.user,
+            extra={'sign': ctx.sign}
+        )
         return Success()
 
     async def send_welcome_message(self, ctx):
